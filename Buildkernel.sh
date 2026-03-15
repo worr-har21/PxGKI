@@ -128,11 +128,89 @@ echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> ./common/arch/arm64/configs/gki_defconfi
 echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./common/arch/arm64/configs/gki_defconfig
 echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./common/arch/arm64/configs/gki_defconfig
 echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./common/arch/arm64/configs/gki_defconfig
-# droidspaces
+# Kernel configurations for full DroidSpaces support
+# Copyright (C) 2026 ravindu644 <droidcasts@protonmail.com>
+
+# IPC mechanisms (required for tools that rely on shared memory and IPC namespaces)
+echo "CONFIG_SYSCTL=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_SYSVIPC=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_POSIX_MQUEUE=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Core namespace support (essential for isolation and running init systems)
+echo "CONFIG_NAMESPACES=y" >> ./common/arch/arm64/configs/gki_defconfig
 echo "CONFIG_PID_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_UTS_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
 echo "CONFIG_IPC_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
-echo "CONFIG_DEVTMPFS=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_USER_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Seccomp support (enables syscall filtering and security hardening)
+echo "CONFIG_SECCOMP=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_SECCOMP_FILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Control groups support (required for systemd and resource accounting)
 echo "CONFIG_CGROUPS=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_CGROUP_DEVICE=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_CGROUP_PIDS=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_MEMCG=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Device filesystem support (enables hardware access when --hw-access is enabled)
+echo "CONFIG_DEVTMPFS=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Overlay filesystem support (required for volatile mode)
+echo "CONFIG_OVERLAY_FS=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Firmware loading support (optional, used when --hw-access is enabled)
+echo "CONFIG_FW_LOADER=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_FW_LOADER_USER_HELPER=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_FW_LOADER_COMPRESS=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Droidspaces Network Isolation Support - NAT/none modes
+
+# Network namespace isolation
+echo "CONFIG_NET_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Virtual ethernet pairs
+echo "CONFIG_VETH=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Bridge device
+echo "CONFIG_BRIDGE=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Netfilter core
+echo "CONFIG_NETFILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_NETFILTER_ADVANCED=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Connection tracking
+echo "CONFIG_NF_CONNTRACK=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# kernels <= 4.18 (Android 4.4 / 4.9)
+echo "CONFIG_NF_CONNTRACK_IPV4=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# iptables infrastructure
+echo "CONFIG_IP_NF_IPTABLES=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# filter table
+echo "CONFIG_IP_NF_FILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# NAT table
+echo "CONFIG_NF_NAT=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# kernels <= 5.0 (Kernel 4.4 / 4.9)
+echo "CONFIG_NF_NAT_IPV4=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_IP_NF_NAT=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# MASQUERADE target (renamed in 5.2)
+echo "CONFIG_IP_NF_TARGET_MASQUERADE=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_NETFILTER_XT_TARGET_MASQUERADE=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# MSS clamping
+echo "CONFIG_NETFILTER_XT_TARGET_TCPMSS=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Policy routing
+echo "CONFIG_IP_ADVANCED_ROUTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+echo "CONFIG_IP_MULTIPLE_TABLES=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+# Disable this on older kernels to make internet work
+echo "CONFIG_ANDROID_PARANOID_NETWORK=n" >> ./common/arch/arm64/configs/gki_defconfig
 # tmpfs
 echo "CONFIG_TMPFS_XATTR=y" >> ./common/arch/arm64/configs/gki_defconfig
 echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./common/arch/arm64/configs/gki_defconfig
