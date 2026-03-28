@@ -256,7 +256,9 @@ jobs:
         run: |
          cd Buildkernel/SukiSU_patch/AnyKernel3
          cp /home/runner/work/PxGKI/PxGKI/Buildkernel/dist/Image /home/runner/work/PxGKI/PxGKI/Buildkernel/SukiSU_patch/AnyKernel3/
-         zip -r "android${{ github.event.inputs.Android_Release }}-${{ github.event.inputs.Kernel_Version }}-AnyKernel3.zip" ./* - name: Output AnyKernel3
+         zip -r "android${{ github.event.inputs.Android_Release }}-${{ github.event.inputs.Kernel_Version }}-AnyKernel3.zip" ./*
+
+      - name: Output AnyKernel3
         run: |
          cd Buildkernel
          mkdir patched
@@ -271,4 +273,3 @@ jobs:
           path: |
             Buildkernel/patched/kernel
             Buildkernel/patched/*.zip
-            
